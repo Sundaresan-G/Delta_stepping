@@ -8,12 +8,17 @@
 #define FILENAME "test_graph.mtx"
 #define DELTA 20
 #define VERTICES 1957027
+#define MAX_DEGREE 12
 
 using namespace std;
 
 int main(int argc, char *argv[]){
+
+    //cout<<"No problem till line 16\n";
     
     MPI_Init(&argc,&argv);
+
+    //cout<<"No problem till line 18\n";
 
     int rank, size, delta=DELTA;
 
@@ -51,6 +56,8 @@ int main(int argc, char *argv[]){
 
     MPI_File_read_at_all(fh, globalStart, chunk, mySize, MPI_CHAR, MPI_STATUS_IGNORE);
     chunk[mySize] = '\0';
+
+    //cout<<"No problem till line 55\n";
     
     int locstart=0, locend=mySize-1;
     if (rank != 0) {
@@ -84,12 +91,15 @@ int main(int argc, char *argv[]){
     /*Now each processor starts creating adjacency list*/
 
     int n=VERTICES;     //no of vertices
-    vector<vector<pair<int,int>>> adj_list(n+1);
+    vector<vector<vector<pair<int,int>>>> adj_list(2,(vector<vector<pair<int,int>>>(n+1)));
+    //int**** adj_list = new int[2][n+1][MAX_DEGREE][2];
 
     //split chunk into lines and then pair of 3 ints
 
     stringstream ss(chunk);
     string lines;
+
+    //cout<<"Reading from file\n";
 
     while(getline(ss,lines,'\n')){        
         stringstream sslines(lines);
@@ -99,24 +109,25 @@ int main(int argc, char *argv[]){
             int source = stoi(word1);
             int dest = stoi(word2);
             int weight = stoi(word3);
-            adj_list[source].push_back(make_pair(dest,weight));   
-            adj_list[dest].push_back(make_pair(source,weight));      
+            int heavy = (weight<delta)?0:1;
+            adj_list[heavy][source].push_back(make_pair(dest,weight));   
+            adj_list[heavy][dest].push_back(make_pair(source,weight));     
         }
     }
     free(chunk);
 
-    /* for(int i=1;i<=n;i++){
-        if(adj_list[i].empty()){
-            continue;
-        } else {
+    for(int i=1;i<=n;i++){ 
+        if(!adj_list[0][i].empty() || !adj_list[0][i].empty()){
             cout<<i<<'\t';
-            int length = adj_list[i].size();
-            for(int j=0; j<length;j++){
-                cout<<"("<<adj_list[i][j].first<<","<<adj_list[i][j].second<<")\t";
+            for(int k=0; k<2;k++){
+                int length = adj_list[k][i].size();
+                for(int j=0; j<length;j++){
+                    cout<<"("<<adj_list[k][i][j].first<<","<<adj_list[k][i][j].second<<")\t";
+                }
             }
             cout<<endl;
-        }
-    } */
+        }       
+    }
     //adj_list creation is completed above
 
     /*Splitting/partition of adj_list and vertices among processes*/
@@ -153,6 +164,8 @@ int main(int argc, char *argv[]){
 
 
     MPI_File_close(&fh);
+
+    MPI_Finalize();
     
     return 0;
 
