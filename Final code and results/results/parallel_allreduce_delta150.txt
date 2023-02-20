@@ -1,0 +1,7 @@
+The given input parameters are:
+Vertices:1957027, Delta:150
+Maximum Degree:12, Maximum Edge weight:200
+Processes invoked:64
+Time elapsed (exluding file handling) in ms: 15014.6
+The final distances are as follows:
+Vertex 983 distance:3608

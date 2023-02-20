@@ -1,0 +1,36 @@
+The given input parameters are:
+Vertices:1957027, Delta:1
+Maximum Degree:12, Maximum Edge weight:200
+Time elapsed (exluding file handling) in ms: 1970.16
+The final distances are as follows:
+Vertex 983 distance:3608
+The given input parameters are:
+Vertices:1957027, Delta:10
+Maximum Degree:12, Maximum Edge weight:200
+Time elapsed (exluding file handling) in ms: 2079.62
+The final distances are as follows:
+Vertex 983 distance:3608
+The given input parameters are:
+Vertices:1957027, Delta:50
+Maximum Degree:12, Maximum Edge weight:200
+Time elapsed (exluding file handling) in ms: 2339.89
+The final distances are as follows:
+Vertex 983 distance:3894
+The given input parameters are:
+Vertices:1957027, Delta:100
+Maximum Degree:12, Maximum Edge weight:200
+Time elapsed (exluding file handling) in ms: 1352.87
+The final distances are as follows:
+Vertex 983 distance:4764
+The given input parameters are:
+Vertices:1957027, Delta:200
+Maximum Degree:12, Maximum Edge weight:200
+Time elapsed (exluding file handling) in ms: 9.978
+The final distances are as follows:
+Vertex 983 distance:2147483647
+The given input parameters are:
+Vertices:1957027, Delta:300
+Maximum Degree:12, Maximum Edge weight:200
+Time elapsed (exluding file handling) in ms: 9.969
+The final distances are as follows:
+Vertex 983 distance:2147483647
